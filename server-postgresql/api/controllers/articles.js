@@ -6,7 +6,7 @@ const Article = require('../models/article')
 router.get('/', async (req, res) => {
     try {
         const articles = await Article.all
-        res.json({articles})
+        res.status(200).json({articles})
     } catch(err) {
         res.status(500).json({err})
     }
@@ -15,7 +15,7 @@ router.get('/', async (req, res) => {
 router.get('/:url_id', async (req, res) => {
     try {
         const article = await Article.findById(req.params.url_id)
-        res.json(article)
+        res.status(200).json(article)
     } catch(err) {
         res.status(404).json({err})
     }
@@ -24,7 +24,7 @@ router.get('/:url_id', async (req, res) => {
 router.post('/', async (req, res) => {
     try {
         const article = await Article.create(req.body);
-        res.json(article);
+        res.status(201).json(article);
     } catch(err) {
         res.status(404).json({err})
     }
