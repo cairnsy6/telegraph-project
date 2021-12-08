@@ -1,5 +1,5 @@
 const url = `http://localhost:3000/articles`;
-const url_id = localStorage.getItem('url_id');
+const path = localStorage.getItem('path');
 
 // init html elements as js objects
 // const form = document.querySelector('form');
@@ -7,11 +7,13 @@ const title = document.querySelector('#title');
 const author = document.querySelector('#author');
 const description = document.querySelector('#description');
 const authorDateDiv = document.querySelector('#a-d-div')
-authorDateDiv.classList('a-d-div');
+authorDateDiv.classList.add('a-d-div');
 
-function getArticle() {
+getArticle();
+
+async function getArticle() {
     console.log()
-    const response = await fetch(`${url}/${url_id}`);
+    const response = await fetch(`${url}/${path}`);
     const data = await response.json();
 
     const date = document.createElement("p");

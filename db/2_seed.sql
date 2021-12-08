@@ -1,4 +1,4 @@
-INSERT INTO articles (url_id, title, name, archive_date, description) 
+INSERT INTO articles (path, title, name, archive_date, description) 
 VALUES
     ('harry-potter-12-08-22','Harry Potter', 'Kelvin Stephano','12-08-21', 'Gryffindor junky' ),
     ('lord-of-the-rings-12-08-29','Lord of the Rings', 'Jimbo','12-08-21', 'Fantastic scenery' ),

@@ -12,9 +12,9 @@ router.get('/', async (req, res) => {
     }
 })
 
-router.get('/:url_id', async (req, res) => {
+router.get('/:path', async (req, res) => {
     try {
-        const article = await Article.findById(req.params.url_id)
+        const article = await Article.findByPath(req.params.path)
         res.status(200).json(article)
     } catch(err) {
         res.status(404).json({err})
@@ -22,10 +22,9 @@ router.get('/:url_id', async (req, res) => {
 })
 
 router.post('/', async (req, res) => {
-    console.log(req.body)
     try {
         const article = await Article.create(req.body);
-        res.status(201).json(article);
+        res.status(201);
     } catch(err) {
         res.status(404).json({err})
     }

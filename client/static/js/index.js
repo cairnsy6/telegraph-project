@@ -1,4 +1,12 @@
-const url = `http://localhost:3000/articles`;
+const e = require("express");
+
+window.onpopstate = checkState;
+const serverUrl = `http://localhost:3000/articles`;
+const path = window.location.href.slice(31);
+console.log(path);
+
+const url = new URL(window.location);
+url.searchParams.set('')
 
 // init html elements as js objects
 const form = document.querySelector('form');
@@ -20,9 +28,16 @@ function getDate() {
     return `${day}-${month}`;
 }
 
-function getUrlId() {
+function getPath() {
     const randNum = Math.floor((Math.random() * 100) +1);
     return `${titleInput.value}-${getDate()}-${randNum}`;
+}
+
+function checkState() {
+    // page reload
+    if (e.state) {
+        console.log(e.state.path);
+    }
 }
 
 /**
@@ -31,11 +46,11 @@ function getUrlId() {
  */
 async function upload(e) {
     e.preventDefault();
-    const url_id = getUrlId();
+    const path = getPath();
     const date = getDate();
 
     const data = {
-        url_id: url_id,
+        path: path,
         title: titleInput.value,
         name: authorInput.value,
         archive_date: date,
@@ -48,17 +63,18 @@ async function upload(e) {
     const options = {
         method: "POST",
         body: JSON.stringify(data),
-        header: {
+        headers: {
             "Content-Type": "application/json"
         }
     }
 
+    window.history.pushState({
+        articlePath: path
+    }, document.title, path)
     try {
-        await fetch(`${url}`, options);
+        await fetch(serverUrl, options);
     } catch (err) {
         console.log(err);
     }
-    // localStorage.setItem('url_id', url_id);
-    // location.href = "article.html";
 }
 
