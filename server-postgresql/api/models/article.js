@@ -38,7 +38,7 @@ class Article {
     static create(data){
         return new Promise (async (resolve, reject) => {
             try {
-                let articleData = await db.query(`INSERT INTO articles (title, name, article_date, description) VALUES ($1, $2, $3, $4) RETURNING *;`, [ data.title, data.name, data.article_date, data.description]);
+                let articleData = await db.query(`INSERT INTO articles (url_id, title, name, archive_date, description) VALUES ($1, $2, $3, $4, $5) RETURNING *;`, [ data.url_id, data.title, data.name, data.archive_date, data.description ]);
                 let newArticle = new Article(articleData.rows[0]);
                 resolve (newArticle);
             } catch (err) {
