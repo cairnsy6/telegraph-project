@@ -42,6 +42,7 @@ async function upload(e) {
         description: descriptionInput.value
     }
 
+    console.log(data);
     console.log(JSON.stringify(data));
 
     const options = {

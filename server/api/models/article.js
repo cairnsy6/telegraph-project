@@ -14,7 +14,6 @@ class Article {
         return new Promise (async (resolve, reject) => {
             try {
                 const articlesData = await db.query(`SELECT * FROM articles;`)
-                console.log(articlesData);
                 const articles = articlesData.rows.map(a => new Article(a))
                 resolve(articles);
             } catch (err) {
