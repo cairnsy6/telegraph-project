@@ -1,12 +1,13 @@
-const e = require("express");
-
 window.onpopstate = checkState;
 const serverUrl = `http://localhost:3000/articles`;
-const path = window.location.href.slice(31);
-console.log(path);
+let articlePath = window.location.href.slice(29);
+
+if (articlePath != "" && articlePath != "index.html") {
+    // get data
+    console.log("fetching data");
+}
 
 const url = new URL(window.location);
-url.searchParams.set('')
 
 // init html elements as js objects
 const form = document.querySelector('form');
@@ -70,7 +71,10 @@ async function upload(e) {
 
     window.history.pushState({
         articlePath: path
-    }, document.title, path)
+    }, "", path);
+    articlePath = window.location.href.slice(29);
+    console.log(articlePath);
+
     try {
         await fetch(serverUrl, options);
     } catch (err) {
