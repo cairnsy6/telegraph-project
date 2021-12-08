@@ -5,6 +5,7 @@ const server = express();
 server.use(cors());
 server.use(express.json());
 
+
 const articlesRoute = require('./controllers/articles')
 
 server.use('/articles', articlesRoute)
