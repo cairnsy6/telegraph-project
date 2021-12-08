@@ -1,16 +1,16 @@
 version: '3'
 services:
-  # client:
-  #   image: node
-  #   ports:
-  #     -8080:8080
-  #   volumes:
-  #     - type: bind
-  #       source: ./client
-  #       target: /code
-  #   working_dir: /code
-  #   command: bash -c "npm install && npm run dev"
-  api:
+  client:
+    image: node
+    ports:
+      - 8080:8080
+    volumes:
+      - type: bind
+        source: ./client
+        target: /code
+    working_dir: /code
+    command: bash -c "npm install && npm run dev"
+  server:
     image: node:12.18.4
     working_dir: /code
     ports: 
@@ -25,7 +25,7 @@ services:
       - db
     volumes:
       - type: bind
-        source: ./api
+        source: ./server
         target: /code
     command: bash -c "npm install && npm run dev"
 
