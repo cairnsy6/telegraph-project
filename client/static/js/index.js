@@ -1,13 +1,4 @@
-window.onpopstate = checkState;
 const serverUrl = `http://localhost:3000/articles`;
-let articlePath = window.location.href.slice(29);
-
-if (articlePath != "" && articlePath != "index.html") {
-    // get data
-    console.log("fetching data");
-}
-
-const url = new URL(window.location);
 
 // init html elements as js objects
 const form = document.querySelector('form');
@@ -32,13 +23,6 @@ function getDate() {
 function getPath() {
     const randNum = Math.floor((Math.random() * 100) +1);
     return `${titleInput.value}-${getDate()}-${randNum}`;
-}
-
-function checkState() {
-    // page reload
-    if (e.state) {
-        console.log(e.state.path);
-    }
 }
 
 /**
@@ -69,14 +53,10 @@ async function upload(e) {
         }
     }
 
-    window.history.pushState({
-        articlePath: path
-    }, "", path);
-    articlePath = window.location.href.slice(29);
-    console.log(articlePath);
-
     try {
         await fetch(serverUrl, options);
+        localStorage.setItem('path', path);
+        document.location.href = `article.html#${path}`;
     } catch (err) {
         console.log(err);
     }
