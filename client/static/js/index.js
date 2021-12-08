@@ -5,25 +5,8 @@ const form = document.querySelector('form');
 const titleInput = document.querySelector('#title-input');
 const authorInput = document.querySelector('#author-input');
 const descriptionInput = document.querySelector('#description-input');
-// const submitBtn = document.querySelector('#submit-btn');
 
 initListeners();
-
-function initListeners() {
-    form.addEventListener("submit", upload)
-}
-
-function getDate() {
-    const date = new Date();
-    const month = date.getUTCMonth() + 1;
-    const day = date.getUTCDate();
-    return `${day}-${month}`;
-}
-
-function getPath() {
-    const randNum = Math.floor((Math.random() * 100) +1);
-    return `${titleInput.value}-${getDate()}-${randNum}`;
-}
 
 /**
  * Uploads the article to the server.
@@ -62,3 +45,18 @@ async function upload(e) {
     }
 }
 
+function getPath() {
+    const randNum = Math.floor((Math.random() * 100) +1);
+    return `${titleInput.value}-${getDate()}-${randNum}`;
+}
+
+function getDate() {
+    const date = new Date();
+    const month = date.getUTCMonth() + 1;
+    const day = date.getUTCDate();
+    return `${day}-${month}`;
+}
+
+function initListeners() {
+    form.addEventListener("submit", upload);
+}
