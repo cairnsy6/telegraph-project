@@ -12,14 +12,14 @@ authorDateDiv.classList.add('a-d-div');
 getArticle();
 
 async function getArticle() {
-    console.log()
+    console.log("Getting article");
     const response = await fetch(`${url}/${path}`);
     const data = await response.json();
 
     const date = document.createElement("p");
-    title.textContent = data.title;
-    author.textContent = data.author
-    date.textContent = `⚫️ ${data.date}`;
-    description.textContent = data.description;
+    title.value = data.title;
+    author.value = data.author
+    date.value = `⚫️ ${data.date}`;
+    description.value = data.description;
     authorDateDiv.append(date);
 }
