@@ -1,16 +1,30 @@
-version: '3'
 services:
+
   api:
-    image: node:12.18.4
-    working_dir: /code
-    volumes:
-      - type: bind
-        source: ./api
-        target: /code
+    container_name: debug_dev_api
+    ports: 
+      - 3000:3000
+    environment: 
+      - PGUSER=futureproof
+      - PGHOST=db
+      - PGPASSWORD=librarypass
+      - PGDATABASE=library
+      - PGPORT=5432
+      - NODE_ENV=development
+    depends_on:
+      - db
+    command: bash -c "npm install && npm run seedDev && npm run dev"
 
   db:
-    image: postgres:12.4
-    environment: 
-      - POSTGRES_USER=futureproof
+    container_name: debug_dev_db
     volumes:
-      - "./db/migrations:/docker-entrypoint-initdb.d/:ro"
+      - "dbdata:/var/lib/postgresql/data"
+    environment: 
+      - POSTGRES_DB=library
+      - POSTGRES_USER=futureproof
+      - POSTGRES_PASSWORD=librarypass
+volumes:
+  dbdata:
+networks: 
+  default:
+    name: debug_api
