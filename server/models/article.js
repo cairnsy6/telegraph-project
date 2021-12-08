@@ -34,7 +34,7 @@ class Article {
         });
     } 
 
-    static create(data){
+    static create(data) {
         return new Promise (async (resolve, reject) => {
             try {
                 let articleData = await db.query(`INSERT INTO articles (path, title, name, archive_date, description) VALUES ($1, $2, $3, $4, $5) RETURNING *;`, [ data.path, data.title, data.name, data.archive_date, data.description ]);
@@ -44,6 +44,17 @@ class Article {
                 reject('Error creating Article');
             }
         });
+    }
+
+    static update(data) {
+        return new Promise (async (resolve, reject) => {
+            try {
+                let updatedArticle = await db.query('UPDATE articles SET title = $1, name = $2, archive_date = $3, description = $4 WHERE path = $5 RETURNING *;', [data.title, data.name, data.archive_date, data.description, data.path ]);
+                resolve(updatedArticle);
+            } catch (err) {
+
+            }
+        })
     }
 }
 
