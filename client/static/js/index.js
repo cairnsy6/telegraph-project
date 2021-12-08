@@ -22,7 +22,7 @@ function getDate() {
 
 function getUrlId() {
     const randNum = Math.floor((Math.random() * 100) +1);
-    return `${titleInput.textContent}-${getDate()}-${randNum}`;
+    return `${titleInput.value}-${getDate()}-${randNum}`;
 }
 
 /**
@@ -36,13 +36,13 @@ async function upload(e) {
 
     const data = {
         url_id: url_id,
-        title: titleInput.textContent,
-        name: authorInput.textContent,
+        title: titleInput.value,
+        name: authorInput.value,
         archive_date: date,
-        description: descriptionInput.textContent
+        description: descriptionInput.value
     }
 
-    console.log(data);
+    console.log(JSON.stringify(data));
 
     const options = {
         method: "POST",
