@@ -10,7 +10,7 @@ router.get('/', async (req, res) => {
     } catch(err) {
         res.status(500).json({err})
     }
-})
+});
 
 router.get('/:path', async (req, res) => {
     try {
@@ -19,16 +19,25 @@ router.get('/:path', async (req, res) => {
     } catch(err) {
         res.status(404).json({err})
     }
-})
+});
 
 router.post('/', async (req, res) => {
     try {
         const article = await Article.create(req.body);
-        res.redirect(`/`);
+        res.status(201).json(article);
     } catch(err) {
         res.status(404).json({err})
     }
-})
+});
+
+router.put('/:path', async (req, res) => {
+    try {
+        const article = await Article.update(req.body);
+        res.status(201).json(article);
+    } catch(err) {
+        res.status(404).json({err});
+    }
+});
 
 
 

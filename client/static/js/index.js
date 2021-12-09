@@ -1,13 +1,4 @@
-window.onpopstate = checkState;
 const serverUrl = `http://localhost:3000/articles`;
-let articlePath = window.location.href.slice(29);
-
-if (articlePath != "" && articlePath != "index.html") {
-    // get data
-    console.log("fetching data");
-}
-
-const url = new URL(window.location);
 
 // init html elements as js objects
 const form = document.querySelector('form');
@@ -125,3 +116,18 @@ async function retrieve(url_ref){
          }
 }
 
+function getPath() {
+    const randNum = Math.floor((Math.random() * 100) +1);
+    return `${titleInput.value}-${getDate()}-${randNum}`;
+}
+
+function getDate() {
+    const date = new Date();
+    const month = date.getUTCMonth() + 1;
+    const day = date.getUTCDate();
+    return `${day}-${month}`;
+}
+
+function initListeners() {
+    form.addEventListener("submit", upload);
+}
