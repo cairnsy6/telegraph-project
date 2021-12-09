@@ -128,6 +128,4 @@ function getDate() {
     return `${day}-${month}`;
 }
 
-function initListeners() {
-    form.addEventListener("submit", upload);
-}
+
