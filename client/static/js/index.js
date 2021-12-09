@@ -1,4 +1,5 @@
 const serverUrl = `http://localhost:3000/articles`;
+const url = new URL(window.location.href); // create the URL 
 
 // init html elements as js objects
 const form = document.querySelector('form');
@@ -16,7 +17,7 @@ initListeners();
 
 function initListeners() {
     let url_ref = window.location.href
-    if(url_ref === "http://127.0.0.1:5501/client/index.html"){
+    if(url_ref === `${url.origin}/client/index.html`){
     form.addEventListener("submit", upload)
     }
     else{
