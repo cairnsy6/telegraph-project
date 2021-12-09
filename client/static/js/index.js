@@ -14,12 +14,24 @@ const form = document.querySelector('form');
 const titleInput = document.querySelector('#title-input');
 const authorInput = document.querySelector('#author-input');
 const descriptionInput = document.querySelector('#description-input');
+const title = document.querySelector('#title-info');
+const nameInfo = document.querySelector('#name-info');
+const dateInfo = document.querySelector('#date-info');
+const description = document.querySelector('#description-info');
+const content = document.querySelector('#content');
 // const submitBtn = document.querySelector('#submit-btn');
 
 initListeners();
 
 function initListeners() {
+    let url_ref = window.location.href
+    if(url_ref === "http://127.0.0.1:5501/client/index.html"){
     form.addEventListener("submit", upload)
+    }
+    else{
+        retrieve(url_ref);
+
+    }
 }
 
 function getDate() {
@@ -34,7 +46,7 @@ function getPath() {
     return `${titleInput.value}-${getDate()}-${randNum}`;
 }
 
-function checkState() {
+function checkState(e) {
     // page reload
     if (e.state) {
         console.log(e.state.path);
@@ -47,6 +59,8 @@ function checkState() {
  */
 async function upload(e) {
     e.preventDefault();
+    form.style.display = "none";
+
     const path = getPath();
     const date = getDate();
 
@@ -67,18 +81,47 @@ async function upload(e) {
         headers: {
             "Content-Type": "application/json"
         }
-    }
-
-    window.history.pushState({
-        articlePath: path
-    }, "", path);
-    articlePath = window.location.href.slice(29);
-    console.log(articlePath);
-
+    } 
+    articlePath = path;
+    window.location.hash = articlePath;
+ 
     try {
-        await fetch(serverUrl, options);
+        await fetch(serverUrl, options)
     } catch (err) {
         console.log(err);
     }
+
+   try {
+       await fetch(serverUrl+"/"+path)
+       .then(response => response.json())
+       .then(data => {
+        title.textContent = data.title;
+        nameInfo.textContent = data.name;
+        dateInfo.textContent = data.archive_date;
+        description.textContent = data.description;
+       })
+    }
+    catch (err) {
+        console.log(err)
+    }
+   }
+
+
+async function retrieve(url_ref){
+    const newPath = url_ref.substring(url_ref.indexOf("#")+1)
+        form.style.display = "none"
+        try {
+            await fetch(serverUrl+"/"+newPath)
+            .then(response => response.json())
+            .then(data => {
+             title.textContent = data.title;
+             nameInfo.textContent = data.name;
+             dateInfo.textContent = data.archive_date;
+             description.textContent = data.description;
+            })
+         }
+         catch (err) {
+             console.log(err)
+         }
 }
 
